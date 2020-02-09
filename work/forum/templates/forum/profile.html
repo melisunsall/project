@@ -1,0 +1,20 @@
+{% extends 'forum/base.html' %}
+ {% load static %}
+    {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'forum/card.css' %}">
+    {% endblock %}
+{% block body%}
+    {% if user.is_authenticated %}
+      <div class="card">
+          <img src="{{user.userprofile.image.url}}" style="width:100%">
+          <h1>{{user.username}}</h1>
+          <h4>{{user.userprofile.department}}</h4>
+          {%if user.is_superuser%}
+          <p class="title">Admin</p>
+          {%else%}
+            <p class="title">Staff</p>
+          {%endif%}
+          <p><button style="width: 100%"> <a href="{% url 'forum:calendar' %}"> Calendar </a> </button></p>
+      </div>
+    {% endif %}
+{% endblock %}

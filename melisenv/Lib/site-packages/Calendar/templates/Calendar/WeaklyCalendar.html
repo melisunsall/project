@@ -1,0 +1,277 @@
+{% load staticfiles %}
+
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="{% static "css/bootstrap-theme.min.css" %}">
+<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/moment.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+
+<link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
+
+<script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/main.css" %}" />
+</head>
+<body>
+<div class="row">
+    <div class="row">
+    <button id="back" class="col-md-3" align="left" onclick=location.href='?n={{ way.0 }}'>Backward</span> </button>
+    <div align="center">
+        <strong class="col-md-6" id="year">{{ week.0 }} - {{ week.6 }} - {{ year }}</strong>
+    </div>
+    <button class="col-md-3" align="right" onclick=location.href='?n={{ way.1 }}'>Forward</span> </button>
+    </div>
+    {% load filters %}
+    <div class="table-responsive" align="center">
+        <div class="col-md-12">
+            <table id="calendar" class="table">
+                <tr>
+                    <th></th>
+                    {% for day in week %}
+                    <th>{{day}}</th>
+                    {% endfor %}
+                </tr>
+                {% for i in range24 %}
+                <tr> 
+                    <th>{{i}}:00</th>
+                    {% for j in range7 %}
+                        {# id is time-day for example 8-17 it means 17th day of month and time is 8 #}
+                        <td id={{i}}-{{week|lookup:j|slice:"0:2"}}></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="etkinlik" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Activity</h4>
+        </div>
+        <div class="modal-body">
+            <form id="modal-form"> {% csrf_token %}
+            <div class="row">      
+                    <div class="col-md-6">
+                        <label for="title">Title</label>
+            </div> 
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="title" placeholder="Title">
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="datepicker">Date</label>
+                </div>
+                <div class="input-group date col-md-6" id="datepicker">
+                <input type="text" class="form-control" id="date" placeholder="Date">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                </div>
+            </div>
+            <div class="row">      
+                <div class="col-md-6">
+                    <label for="timepicker-start">Start Time</label>
+                </div>        
+                <div class="input-group date col-md-6" id="timepicker-start">
+                    <input type='text' id="start_time" class="form-control" placeholder="Start Time" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>   
+            </div>
+            <div class="row">      
+                    <div class="col-md-6">
+                        <label for="timepicker-end">Finish Time</label>
+                    </div> 
+            <div class="input-group date col-md-6" id="timepicker-end">
+                <input type='text' id="finish_time" class="form-control" placeholder="Finish Time" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div> 
+            </div>  
+            <div class="row">      
+                    <div class="col-md-6">
+                        <label for="repeat_fre">Repeat Frequency</label>
+                    </div> 
+            <div class="form-group col-md-6">
+                <select class="form-control" id="repeat_fre">
+                    <option value=""></option>
+                    <option value="1">Day</option>
+                    <option value="2">Week</option>
+                    <option value="3">Month</option>
+                    <option value="4">Year</option>
+                </select>
+            </div>
+            </div>
+            <div class="row">      
+                    <div class="col-md-6">
+                        <label for="repeat_time">Repeat Time</label>
+                    </div> 
+            <div class="form-group col-md-6">
+                <input type="number" min=1 max=20 value="1" class="form-control" id="repeat_time" placeholder="1">
+            </div>
+            </div>
+            <div class="row">      
+                    <div class="col-md-6">
+                        <label for="location">Location</label>
+                    </div> 
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="location" placeholder="Location">
+            </div>   
+            </div>
+            <div class="row">      
+                    <div class="col-md-6">
+                        <label for="color">Color</label>
+                    </div> 
+            <div class="form-group col-md-6">
+                    <select class="form-control" id="color">
+                    <option value="#eeeeee">Gray</option>
+                    <option value="#ff0000">Red</option>
+                    <option value="#0000ff">Blue</option>
+                    <option value="#00ff00">Green</option>
+                    <option value="#000000">Black</option>
+                    <option value="#ffffff">White</option>
+                    <option value="#7E8F7C">Khaki</option>
+                </select>
+            </div>                        
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="private">
+                <label class="form-check-label" for="ozel<">Private?</label>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment" rows="2"></textarea>
+            </div>
+            <button id="submit" type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button id="delete_button" name="" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    String.prototype.format = function() {
+        var str = this;
+        for (var i = 0; i < arguments.length; i++) {       
+          var reg = new RegExp("\\{" + i + "\\}", "gm");             
+          str = str.replace(reg, arguments[i]);
+        }
+        return str;
+      };
+
+    data = {{ activities | safe }};
+    for(i=0;i<data.length;i++){
+        for(j=parseInt(data[i].start_time);j<=parseInt(data[i].finish_time);j++){
+            var str = "<a id={0} class={1} style=background-color:{2}>{3}</a>".format(data[i].id, data[i].id, data[i].color, data[i].title)
+            if(parseInt(data[i].date)<10)
+            {
+                $("#"+j+"-0"+data[i].date).append(str);
+            }
+            else{
+                $("#"+j+"-"+data[i].date).append(str);
+            }
+
+        };
+    };
+
+    $("a").click(function () {
+        $.ajax({
+            url: "/calendar/get/" + this.id,
+            type: 'get',
+            success: function (data) {
+                $("#delete_button").attr("name", data.id);
+                $("#modal-form").attr("name", data.id);
+                Object.keys(data).forEach(function(key) {
+                    if(key=='private'){
+                        $("#{0}".format(key)).prop("checked", data[key]);
+                    }
+                    $("#{0}".format(key)).val(data[key]);
+                });
+            },
+        });
+    });
+
+    $("#delete_button").click(function () {
+        $.ajax({
+            url: "/calendar/delete/" + this.name,
+            type: 'get',
+            item: this.name,
+            success: function (data) {
+                {# $(".{0}".format(this.item)).remove(); #}
+                window.location.href = "/calendar/?" + "{{request.GET.urlencode}}";
+            },
+        });
+    });
+
+    $(document).on('submit', '#modal-form', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: "/calendar/save/" + this.name,
+            type: 'post',
+            data: {id :this.name,
+                title: $("#title").val(),
+                date: $("#date").val(),
+                start_time: $("#start_time").val(),
+                finish_time: $("#finish_time").val(),
+                repeat_fre: $("#repeat_fre").val(),
+                repeat_time: $("#repeat_time").val(),
+                location: $("#location").val(),
+                color: $("#color").val(),
+                private: $("#private").is(":checked"),
+                comment: $("#comment").val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val() },
+            success: function () {
+                window.location.href = "/calendar/?" + "{{request.GET.urlencode}}";
+            },
+        });
+    });
+
+    $("td").click(function () {
+        var splited_data = this.id.split('-');
+        var time = splited_data[0] + ":00:00";
+        var day = "{{ year }}-" + "{{ month }}-" + splited_data[1];
+        $("#modal-form").attr('name', "0");
+        $("#title").val("");
+        $("#date").val(day);
+        $("#start_time").val(time);
+        $("#finish_time").val(time);
+        $("#repeat_fre").val("");
+        $("#repeat_time").val("1");
+        $("#location").val("");
+        $("#color").val("");
+        $("#private").val("");
+        $("#comment").val("");
+
+    })
+</script>
+<script src="{% static "js/main.js" %}"></script>
+
+</html>

@@ -1,0 +1,33 @@
+{%extends 'forum/base.html'%}
+{% load static %}
+
+{% block extrahead %}
+        <link rel="stylesheet" href="{% static 'forum/about.css' %}">
+
+{% endblock %}
+
+
+{% block body %}
+
+        <div>
+            <h1 class="about">Welcome to Summer Internship Program of Technarts</h1>
+
+            <div class="dropdown">
+              <button class="dropbtn"> Apply Our Internship Program  </button>
+              <div class="dropdown-content">
+               <a href="{% url 'forum:intern-add' %}">
+                        Add Application
+                    </a>
+                <a href="#">Contact With Us</a>
+
+              </div>
+            </div>
+        </div>
+
+        <div>
+            <figure><img class="inter" src="https://miro.medium.com/max/2000/1*_xE4iALfAmYmiAV-sOc47A@2x.png" style="width:900px;height:450px;padding-left:200px;" /></figure>
+
+
+
+        </div>
+{% endblock %}

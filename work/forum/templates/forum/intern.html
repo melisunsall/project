@@ -1,0 +1,180 @@
+{%extends 'forum/base.html'%}
+ {% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% block extrahead %}
+        <link rel="stylesheet" href="{% static 'forum/card.css' %}">
+
+{% endblock %}
+{% block body %}
+<div class="container-fluid songs-container">
+    <div class="row">
+
+
+            <div class="col-sm-4 col-md-3">
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+
+                            {% if intern.profile_photo %}
+                                <img src="{{ intern.profile_photo.url}}" class="img-responsive">
+                            {% else %}
+                                <h3>No image to display</h3>
+                            {% endif %}
+
+                        <h1>{{ intern.name }} </h1>
+                        <h1><small>{{ intern.department }}</small></h1>
+                        <h4><strong>Advisor:</strong>{{intern.advisor}}</h4>
+
+                    </div>
+
+                </div>
+            </div>
+
+        <!-- Right Song Info -->
+            <div class="col-sm-8 col-md-9">
+                <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                        <li role="presentation" class="active"><a href="{% url 'forum:interns' %}">View All</a><br>
+                        </li>
+                    </ul>
+
+
+                <div class="panel panel-default" >
+                    <div class="panel-body">
+
+                        <h3>          Details</h3>
+
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+
+                        <table class="table">
+                            <thead>
+                            <tr class="warning">
+
+                                <th>Resume</th>
+                                <th>Situation</th>
+                                <th>Team Work</th>
+                                <th>Technical Skill</th>
+                                <th>Experience</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="warning">
+                                    <td>
+                                        <a href="{{intern.resume.url}}" class="btn btn-warning btn-sm" role="button">Resume</a>
+                                    </td>
+                                    <td>
+                                        {% if intern.is_accepted == 1 %}
+                                            <h4>Accepted</h4>
+                                        {% elif intern.is_accepted == 2 %}
+                                            <h4>Denied</h4>
+                                        {% else %}
+                                            <h4>Waiting</h4>
+
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <h4>{{intern.team_work}} <span class="glyphicon glyphicon-star"></span> </h4>
+                                    </td>
+                                    <td>
+                                        <h4>{{intern.experience}} <span class="glyphicon glyphicon-star"></span> </h4>
+
+                                    </td>
+                                    <td>
+                                        <h4>{{intern.technical_skills}} <span class="glyphicon glyphicon-star"></span></h4>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+            <div class="col-sm-5 col-md-9">
+                    <div class="panel panel-warning">
+                        <div class="panel-body-comment">
+                            <table class="comment-table">
+                                <thead>
+                                <tr class="info">
+                                    <h3>Comments - Interview Notes</h3>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="info">
+                                    <div class="main-comment-section">
+                                         {% for comment in object.comment_set.all%}
+                                          <ul>
+                                            <li style="list-style:none">
+
+                                        <blockquote class="blockquote">
+                                         <p class="mb-0"> {{comment.text}}</p>
+                                         <footer class="blockquote-footer">by<cite title="Source Title">{{comment.user.username}}</cite></footer>
+
+                                        </blockquote>
+                                                 <form action="/forum/intern/{{comment.id}}/delete" method="post" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+                                                    <button type="submit" class="btn btn-default btn-sm">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </form>
+                                                <a href="{% url 'forum:vote-comment' comment.id %}" class="btn btn-danger btn-sm" role="button"> <i class="fa fa-thumbs-up"></i> {{comment.like}}</a>
+
+                                            </li>
+                                          </ul>
+                                        {%endfor%}
+                                     </div>
+
+                                    <form action="/forum/intern/{{ intern.id }}/add_comment" method="post" enctype="multipart/form-data">
+                                        {%csrf_token%}
+                                        <input type="text" name="textcomment">
+                                        <button class="btn btn-warning btn-sm" type="submit">Add Comment</button>
+                                    </form>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                 {% if object.file_set.count == 0%}
+                    <form action="/forum/intern/{{ intern.id }}/upload" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <input type="file" name="document">
+                    <button class="btn btn-warning btn-sm" type="submit">Upload File</button>
+                </form>
+
+                {%else%}
+                <div>
+                    {% for the in object.file_set.all%}
+                        <ul class="links">
+                            <a href="{{the.file.url}}" class="button-ass" role="button">Assignment </a>
+
+                        </ul>
+
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+
+
+                 <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                     {%if user.is_superuser%}
+                        {% if intern.is_accepted == 0 %}
+                            <li role="presentation" ><a href="{% url 'forum:accept' intern.id %}" class="button-ass" role="button">Accept</a>
+                            </li>
+                        {%endif%}
+                     {%endif%}
+
+                 </ul>
+
+            </div>
+
+    </div>
+
+</div>
+{%endblock%}
+
+

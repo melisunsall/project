@@ -1,0 +1,32 @@
+{%extends 'forum/base.html'%}
+{% block body %}
+{% if department_list %}
+    <ul>
+    {% for department in department_list %}
+
+
+            <div class="card" style="width: 22rem;">
+              <img class="card-img-top" src="{{ department.dep_logo.url }}" height="100" width="120" >
+              <div class="card-body">
+                <h4 class="card-title">{{ department.department_name}}</h4>
+                <a href="/forum/{{ department.id }}/" class="btn btn-primary">GO DETAIL</a>
+              </div>
+            </div>
+
+         <p>     </p>
+
+
+
+        <p>      </p>
+        <p>      </p>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No departments are available.</p>
+{% endif %}
+
+{%endblock%}
+
+
+
+

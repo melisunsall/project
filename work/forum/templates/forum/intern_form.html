@@ -1,0 +1,29 @@
+{% extends 'forum/base.html' %}
+{% block title %}Add a New Intern{% endblock %}
+{% block interns_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add a New Intern</h3>
+                        <form class="form-horizontal" {%if user.is_superuser%} action="/forum/intern/list" {%else%} action="/forum/about" {% endif %} method="post" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            {%include 'forum/form_template.html'%}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                             </div>
+                        </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

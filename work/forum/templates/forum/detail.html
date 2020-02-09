@@ -1,0 +1,19 @@
+{%extends 'forum/base.html'%}
+{% block body %}
+
+<img src="{{department.dep_logo.url}}" height="115" width="125">
+
+<h1>{{ department.department_name }}</h1>
+
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
+{% for intern in department.intern_set.all %}
+<li><a href="/forum/{{ department.id }}/{{intern.id}}">{{intern.name}}</a> applied at {{intern.app_date}}</li>
+{% endfor %}
+{%endblock%}
+
+
+

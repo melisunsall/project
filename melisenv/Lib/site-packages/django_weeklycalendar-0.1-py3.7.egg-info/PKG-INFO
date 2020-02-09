@@ -1,0 +1,47 @@
+Metadata-Version: 1.1
+Name: django-weeklycalendar
+Version: 0.1
+Summary: Weekly Calendar for Django
+Home-page: https://github.com/yvznvr/WeeklyCalendar
+Author: Yavuz Unver
+Author-email: yvzunver@gmail.com
+License: GPL License
+Description: =====================
+        django-weeklycalendar
+        =====================
+        
+        django-weeklycalendar is a simple calendar that keep activities and publish it to people in weekly form.
+        
+        Quick Start
+        -----------
+        
+        1. Install django-weeklycalendar
+            
+            pip install django-weeklycalendar
+            
+        2. Add django-weeklycalendar to your INSTALLED_APPS in setting.py
+        
+            INSTALLED_APPS = [
+                ...
+                'django-weeklycalendar',
+            ]
+            
+        3. Include the polls URLconf in your project urls.py
+            path('calendar', include("Calendar.urls"))
+            
+        4. Make migrations
+            ./manage.py makemigrations
+            ./manage.py migrate
+            
+        5. Start your project and test app
+        
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content

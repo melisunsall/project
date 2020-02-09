@@ -1,0 +1,68 @@
+* {box-sizing: border-box}
+
+
+body {
+    background: url("images/86373.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+
+
+.nav.navbar-nav li a {
+   color: #FFF;
+   font-family: "Comic Sans MS", cursive, sans-serif;
+
+ }
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.nav.navbar-nav a:hover {
+ color: yellow;
+}
+
+.main-navigation .menu li a {
+    font-size: 13px;
+    font-weight: 500;
+    color: yellow;
+}
+
+
+
+
+
+.glyphicon.glyphicon-ok {
+    font-size: 150px;
+}
+
+
+.table{
+      border-radius: 25px;
+      border: 4px solid #000000;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+
+}
+.comment-table{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+
+}
+.panel-body{
+  background-color: #E2E2E2;
+
+}
+.panel-body-comment{
+  background-color: #E2E2E2;
+
+}
+
+.transparent{
+    background-color: rgba(0,0,0,0.15);
+}
+
+.panel{
+    background-color: transparent;
+    border: 1px #222;
+}
+
+

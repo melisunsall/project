@@ -1,0 +1,47 @@
+a.button-ass {
+  margin: 50px auto;
+  padding: 15px 0;
+  width: 250px;
+  font-size: 24px;
+  /*border: 3px solid rgb(231, 76, 60);*/
+  color: rgb(231, 76, 60);
+  display: block;
+  transition: 0.4s;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+a.button-ass:after{
+    content: '';
+    margin-top: -48px;
+  padding: 15px 0;
+  width: 250px;
+  height: 64px;
+  border: 3px solid rgb(231, 76, 60);
+  color: white;
+  display: block;
+  transition: 0.4s;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+a.button-ass:hover {
+ transition: 0.4s;
+  box-sizing: border-box;
+  cursor: pointer;
+  color: white;
+}
+
+a.button-ass:hover:after {
+  transition: 0.4s;
+  box-sizing: border-box;
+  cursor: pointer;
+  color: rgb(231, 76, 60);
+  border-left: 125px solid rgb(231, 76, 60);
+  border-right: 125px solid rgb(231, 76, 60);
+}
+
